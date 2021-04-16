@@ -1,0 +1,2 @@
+/home/driver/Desktop/Lab/lab2_1/lab2a1.o
+

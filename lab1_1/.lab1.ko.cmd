@@ -1,0 +1,1 @@
+cmd_/home/linh9121999/VD_Driver_Kernel/Lab/lab1_1/lab1.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000  --build-id  -T ./scripts/module-common.lds -o /home/linh9121999/VD_Driver_Kernel/Lab/lab1_1/lab1.ko /home/linh9121999/VD_Driver_Kernel/Lab/lab1_1/lab1.o /home/linh9121999/VD_Driver_Kernel/Lab/lab1_1/lab1.mod.o;  true
