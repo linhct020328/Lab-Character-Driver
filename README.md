@@ -15,4 +15,3 @@
 - `Sau khi hiển thị nội dung kernel ta test bên phần user thì cần dịch: $gcc test.c -o test (test hoặc main)`
 - `Chạy test: $ sudo ./test`
 
-## Các bạn có thể tham khảo ở đây : https://www.notion.so/B-i-t-p-Driver-06509d19c78849cb968a590c4b008903
