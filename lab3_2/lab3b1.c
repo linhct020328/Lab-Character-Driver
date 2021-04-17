@@ -1,76 +1,37 @@
+//chưa test hoán vị toàn cục -> phần đó có thể sai
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/init.h>
 #include <linux/slab.h>
 #include <linux/ctype.h>
 
-static void ChuyenVi(char *XauRo,char *XauMa,int k){//En(x) = (x+n) mod 26
-	int i,j,ii=0,length,code[100][100],column;
-	length = strlen(XauRo); //Sử dụng thư viện <linux/string.h>
-	for(i=0;i<length;){
-		for(j=0;j<k;j++) {
-			code[ii][j]=0;
-			i++;
+static void ChuyenVi(char *XauRo,char *XauMa,int k){
+	int i=0;
+	while(XauRo[i]!='\0'){
+		if(XauRo[i]>=97){
+			XauMa[i] = ((((XauRo[i]-97)+k)%26)+97);
+		}else{
+			XauMa[i] = ((((XauRo[i]-65)+k)%26)+65);
 		}
-		ii++;
+		i++;
 	}
-
-	ii=0;
-
-	for(i=0;i<length;){
-		if(XauRo[i]!= ' ') {
-			for(j=0;j<k;) {
-				if(i<=length) {
-						code[ii][j]=(int)XauRo[i];
-						i++;
-						j++;
-				} else {
-					break;
-				}
-			}
-			ii++;
-		} else {
-			i++;
-		}
-	}
-	column = ii;
-	ii=0;
-	for(i=0;i<k;i++){
-		for(j=0;j< column; j++) {
-			if(code[j][i]!=0){
-				XauMa[ii]=(char)code[j][i];
-				ii++;			
-			}
-		}
-	}
-	XauMa[ii]='\0';
 }
 
 static void ThayThe(char *XauRo,char *XauMa,char *k){
-	k = k%26;
-    	int i,j=0,temp;
-    	for (i=0;XauRo[i]!=NULL;i++)
-	  	XauRo[i]=tolower(XauRo[i]);
-	for (i=0;XauRo[i]!=NULL;i++) {
-		if(XauRo[i]==' ')
-		    XauMa[j++]=XauRo[i]; else {
-			if(XauRo[i]>=48 && XauRo[i]<=57) {
-				temp=XauRo[i]+k;
-				if(temp>57)
-				         XauMa[j++]=48+(temp-58); else
-				         XauMa[j++]=temp;
-			} else {
-				if(XauRo[i]>=97 && XauRo[i]<=123) {
-					temp=XauRo[i]+k;
-					if(temp>122)
-					             XauMa[j++]=97+(temp-123); else
-					             XauMa[j++]=temp;
-				} else
-				              XauMa[j++]=XauRo[i];
+	int i=0;
+	while(XauRo[i]!='\0'){
+		if(XauRo[i]==' '){
+			XauMa[i]=' ';
+		}
+		else{
+			if(XauRo[i]>=97){
+				XauMa[i] = *(k+(XauRo[i]-97));
+			}else{
+				XauMa[i] = *(k+(XauRo[i]-65));
 			}
 		}
+		i++;
 	}
-	XauMa[j]='\0';
 }
 
 //mã hóa hoán vị toàn cục
@@ -132,15 +93,15 @@ static void HoanViToanCuc(char *XauRo, char *XauMa, char *k){
 //GFP_KERNEL: phan bo RAM binh thuong
 
 static int __init init_lab(void){
-	char XauRo[15] = "Thuy Linh";
+	char XauRo[30] = "Thuy Linh";
 
-	char *XauMaChuyenVi = (char *)kmalloc(15*sizeof(char),GFP_KERNEL);
+	char *XauMaChuyenVi = (char *)kmalloc(30*sizeof(char),GFP_KERNEL);
 	int k1 = 1;
 	
-	char *XauMaThayThe = (char *)kmalloc(15*sizeof(char),GFP_KERNEL);
+	char *XauMaThayThe = (char *)kmalloc(30*sizeof(char),GFP_KERNEL);
 	char *k2 = "phqgiumeaylnofdxjkrcvstzwb";
 	
-	char *XauMaHoanViToanCuc = (char *)kmalloc(15*sizeof(char),GFP_KERNEL);
+	char *XauMaHoanViToanCuc = (char *)kmalloc(30*sizeof(char),GFP_KERNEL);
 	char *k3 = "CT2C";
 	
     	printk("\nXau Ro : %s",XauRo);
